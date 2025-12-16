@@ -1,8 +1,8 @@
-import { defineType, defineField } from 'sanity'
+import {defineType, defineField} from 'sanity'
 
-export const user = defineType({
-  name: 'user',
-  title: 'User',
+export const subscriber = defineType({
+  name: 'subscriber',
+  title: 'Subscriber',
   type: 'document',
   fields: [
     defineField({
@@ -18,30 +18,76 @@ export const user = defineType({
       validation: (Rule) => Rule.required().email(),
     }),
     defineField({
-      name: 'image',
-      title: 'Image URL',
-      type: 'string',
-      description: 'URL to the user\'s profile image',
+      name: 'avatar',
+      title: 'Avatar',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      description: 'Profile picture',
+    }),
+    defineField({
+      name: 'avatarUrl',
+      title: 'Avatar URL',
+      type: 'url',
+      description: 'External avatar URL (e.g., from OAuth provider)',
     }),
     defineField({
       name: 'isSubscribed',
       title: 'Is Subscribed',
       type: 'boolean',
-      description: 'Whether the user has an active subscription',
+      description: 'Active subscribers can like and comment on posts',
       initialValue: false,
+    }),
+    defineField({
+      name: 'subscribedAt',
+      title: 'Subscribed At',
+      type: 'datetime',
+      description: 'When the user subscribed',
     }),
     defineField({
       name: 'subscriptionExpiry',
       title: 'Subscription Expiry',
       type: 'datetime',
-      description: 'When the user\'s subscription expires',
+      description: 'When the subscription expires (leave empty for lifetime)',
+    }),
+    defineField({
+      name: 'subscriptionTier',
+      title: 'Subscription Tier',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Free', value: 'free'},
+          {title: 'Basic', value: 'basic'},
+          {title: 'Premium', value: 'premium'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'free',
+    }),
+    defineField({
+      name: 'createdAt',
+      title: 'Created At',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      readOnly: true,
     }),
   ],
   preview: {
     select: {
       title: 'name',
       subtitle: 'email',
-      media: 'image',
+      media: 'avatar',
+      isSubscribed: 'isSubscribed',
+      tier: 'subscriptionTier',
+    },
+    prepare({title, subtitle, media, isSubscribed, tier}) {
+      const status = isSubscribed ? `✅ ${tier || 'subscribed'}` : '❌ not subscribed'
+      return {
+        title: title || 'Unnamed',
+        subtitle: `${subtitle} • ${status}`,
+        media,
+      }
     },
   },
 })
