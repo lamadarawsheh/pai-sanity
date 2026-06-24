@@ -81,7 +81,14 @@ export const lesson = defineType({
       ],
       hidden: ({ parent }) => parent?.type !== 'quiz',
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
+
   preview: {
     select: {
       title: 'title',

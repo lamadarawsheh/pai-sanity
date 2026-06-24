@@ -35,7 +35,14 @@ export const chapter = defineType({
       type: 'number',
       initialValue: 100,
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
+
   preview: {
     select: {
       title: 'title',

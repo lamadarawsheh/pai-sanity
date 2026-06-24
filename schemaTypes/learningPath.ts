@@ -87,7 +87,14 @@ export const learningPath = defineType({
       title: 'Display Order',
       type: 'number',
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
+
   preview: {
     select: {
       title: 'title',

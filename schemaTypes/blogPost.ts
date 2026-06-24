@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export const blogPost = defineType({
   name: 'blogPost',
@@ -41,19 +41,19 @@ export const blogPost = defineType({
           options: {
             language: 'typescript',
             languageAlternatives: [
-              {title: 'TypeScript', value: 'typescript'},
-              {title: 'JavaScript', value: 'javascript'},
-              {title: 'HTML', value: 'html'},
-              {title: 'CSS', value: 'css'},
-              {title: 'JSON', value: 'json'},
-              {title: 'Python', value: 'python'},
-              {title: 'Bash', value: 'bash'},
+              { title: 'TypeScript', value: 'typescript' },
+              { title: 'JavaScript', value: 'javascript' },
+              { title: 'HTML', value: 'html' },
+              { title: 'CSS', value: 'css' },
+              { title: 'JSON', value: 'json' },
+              { title: 'Python', value: 'python' },
+              { title: 'Bash', value: 'bash' },
             ],
           },
         },
         {
           type: 'image',
-          options: {hotspot: true},
+          options: { hotspot: true },
           fields: [
             {
               name: 'alt',
@@ -68,13 +68,13 @@ export const blogPost = defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [{ type: 'reference', to: { type: 'category' } }],
     }),
     defineField({
       name: 'savedBy',
       title: 'Saved By',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'subscriber'}]}],
+      of: [{ type: 'reference', to: [{ type: 'subscriber' }] }],
       hidden: true, // Hide from Studio UI
     }),
 
@@ -89,7 +89,7 @@ export const blogPost = defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: {type: 'author'},
+      to: { type: 'author' },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -109,7 +109,7 @@ export const blogPost = defineType({
       name: 'tags',
       title: 'Tags',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
       options: {
         layout: 'tags',
       },
@@ -165,7 +165,14 @@ export const blogPost = defineType({
       description: 'Enable or disable comments on this post',
       initialValue: true,
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
+
   preview: {
     select: {
       title: 'title',
@@ -175,7 +182,7 @@ export const blogPost = defineType({
       likeCount: 'likeCount',
       commentCount: 'commentCount',
     },
-    prepare({title, author, media, viewCount, likeCount, commentCount}) {
+    prepare({ title, author, media, viewCount, likeCount, commentCount }) {
       return {
         title,
         subtitle: `by ${author || 'Unknown'} • 👁 ${viewCount || 0} • ❤️ ${likeCount || 0} • 💬 ${commentCount || 0}`,
@@ -187,22 +194,22 @@ export const blogPost = defineType({
     {
       title: 'Most Viewed',
       name: 'viewCountDesc',
-      by: [{field: 'viewCount', direction: 'desc'}],
+      by: [{ field: 'viewCount', direction: 'desc' }],
     },
     {
       title: 'Most Liked',
       name: 'likeCountDesc',
-      by: [{field: 'likeCount', direction: 'desc'}],
+      by: [{ field: 'likeCount', direction: 'desc' }],
     },
     {
       title: 'Most Commented',
       name: 'commentCountDesc',
-      by: [{field: 'commentCount', direction: 'desc'}],
+      by: [{ field: 'commentCount', direction: 'desc' }],
     },
     {
       title: 'Newest First',
       name: 'publishedDateDesc',
-      by: [{field: 'publishedDate', direction: 'desc'}],
+      by: [{ field: 'publishedDate', direction: 'desc' }],
     },
   ],
 })

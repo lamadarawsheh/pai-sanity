@@ -43,7 +43,14 @@ export const category = defineType({
         layout: 'dropdown',
       },
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
+
   preview: {
     select: {
       title: 'title',
